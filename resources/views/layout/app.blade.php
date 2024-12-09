@@ -910,7 +910,7 @@
                 <i class="fa-solid fa-graduation-cap text-[32px] text-Mblue"></i>
                 <span class="font-semibold text-Mplanet">Exam</span>
             </div>
-            <div class="mt-8 mb-8 flex px-3 py-2 rounded-md bg-MgrayLighter items-center justify-between">
+            <div class="my-8 flex px-3 py-2 rounded-md bg-MgrayLighter items-center justify-between">
                 <div class="flex items-center">
                     <img class="mr-4 w-[30px] h-[30px] object-fill rounded-md "
                         src="{{ asset('storage/images/avata1.jpg') }}" alt="Lỗi">
@@ -924,18 +924,19 @@
                 </div>
             </div>
             <a href="{{ route('monhoc.index') }}"
-               class=" mb-3 px-3 py-2 flex items-center {{ Request::is('monhoc') ? 'text-Mblue' : 'text-Mgray' }}">
+               class=" mb-3 px-3 py-2 flex items-center {{ Request::is('monhoc*') ? 'text-Mblue' : 'text-Mgray' }}">
                 <i class="text-[20px]  mr-4 fa-solid fa-book"></i>
-                <p class="text-[14px] font-semibold {{ Request::is('monhoc') ? 'text-Mblue' : 'text-Mplanet' }}">Môn học</p>
+                <p class="text-[14px] font-semibold {{ Request::is('monhoc*') ? 'text-Mblue' : 'text-Mplanet' }}">Môn học</p>
             </a>
             <a href="{{ route('cauhoi.index') }}"
-               class=" mb-3 px-3 py-2 flex items-center {{ Request::is('cauhoi') ? 'text-Mblue' : 'text-Mgray' }}">
+               class=" mb-3 px-3 py-2 flex items-center {{ Request::is('cauhoi*') ? 'text-Mblue' : 'text-Mgray' }}">
                 <i class="text-[20px]  mr-4 fa-solid fa-circle-question"></i>
-                <p class="text-[14px] font-semibold {{ Request::is('cauhoi') ? 'text-Mblue' : 'text-Mplanet' }}">Câu hỏi</p>
+                <p class="text-[14px] font-semibold {{ Request::is('cauhoi*') ? 'text-Mblue' : 'text-Mplanet' }}">Câu hỏi</p>
             </a>
         </div>
         <div class="bg-Mlight col-span-10">
             <div class="col-span-10">
+                @include('layout.header')
                 @yield('content')
             </div>
         </div>

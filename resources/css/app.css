@@ -7,3 +7,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+@layer components {
+    .btn-primary {
+        @apply px-4 py-2 hover:cursor-pointer bg-Mblue text-Mlight rounded-[6px] text-[13px] font-medium hover:opacity-85
+    }
+    .btn-danger {
+        @apply px-4 py-2 hover:cursor-pointer bg-Merrors text-Mlight rounded-[6px] text-[13px] font-medium hover:opacity-85
+    }
+    .btn-warning {
+        @apply px-4 py-2 hover:cursor-pointer bg-Mwarnings text-Mlight rounded-[6px] text-[13px] font-medium hover:opacity-85
+    }
+    .btn-success {
+        @apply px-4 py-2 hover:cursor-pointer bg-Msucess text-Mlight rounded-[6px] text-[13px] font-medium hover:opacity-85
+    }
+}

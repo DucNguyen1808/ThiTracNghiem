@@ -12,8 +12,8 @@ class MonHocController extends Controller
      */
     public function index()
     {
-        $monHoc = MonHoc::all();
-        return view('admin.monhoc.index', ['monHoc' => $monHoc]);
+        $dsMonHoc = MonHoc::all();
+        return view('admin.monhoc.index', ['dsMonHoc' => $dsMonHoc]);
     }
 
     /**
@@ -21,7 +21,7 @@ class MonHocController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.monhoc.create');
     }
 
     /**
@@ -29,7 +29,13 @@ class MonHocController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData =  $request->validate([
+            'tenMon'=>'required',
+        ]);
+        $monHoc = new MonHoc();
+        $monHoc->tenmon=$request->tenMon;
+        $monHoc->save();
+        return redirect()->route('monhoc.index');
     }
 
     /**
@@ -45,7 +51,8 @@ class MonHocController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $monHoc = MonHoc::find($id);
+        return view('admin.monhoc.edit',['monHoc'=>$monHoc]);
     }
 
     /**
@@ -53,7 +60,13 @@ class MonHocController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData =  $request->validate([
+            'tenMon'=>'required',
+        ]);
+        $monHoc = MonHoc::find($id);
+        $monHoc->tenmon=$request->tenMon;
+        $monHoc->save();
+        return redirect()->route('monhoc.index');
     }
 
     /**
@@ -61,6 +74,8 @@ class MonHocController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $monHoc = MonHoc::find($id);
+        $monHoc->delete();
+        return redirect()->route('monhoc.index');
     }
 }
