@@ -10,10 +10,17 @@ class MonHocController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dsMonHoc = MonHoc::all();
-        return view('admin.monhoc.index', ['dsMonHoc' => $dsMonHoc]);
+        dd(gettype($request->all()));
+        $dsMonHoc = MonHoc::get();
+        if ($request->get('sort')['enabel']) {
+            $column = $request->get('sort')['column'];
+            $type = $request->get('sort')['type'];
+            $dsMonHoc = MonHoc::orderBy($column, $type)->get();
+        }
+        $sort = $request->get('sort');
+        return view('admin.monhoc.index', ['dsMonHoc' => $dsMonHoc, 'sort' => $sort]);
     }
 
     /**
@@ -30,10 +37,10 @@ class MonHocController extends Controller
     public function store(Request $request)
     {
         $validatedData =  $request->validate([
-            'tenMon'=>'required',
+            'tenMon' => 'required',
         ]);
         $monHoc = new MonHoc();
-        $monHoc->tenmon=$request->tenMon;
+        $monHoc->tenmon = $request->tenMon;
         $monHoc->save();
         return redirect()->route('monhoc.index');
     }
@@ -52,7 +59,7 @@ class MonHocController extends Controller
     public function edit(string $id)
     {
         $monHoc = MonHoc::find($id);
-        return view('admin.monhoc.edit',['monHoc'=>$monHoc]);
+        return view('admin.monhoc.edit', ['monHoc' => $monHoc]);
     }
 
     /**
@@ -61,10 +68,10 @@ class MonHocController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData =  $request->validate([
-            'tenMon'=>'required',
+            'tenMon' => 'required',
         ]);
         $monHoc = MonHoc::find($id);
-        $monHoc->tenmon=$request->tenMon;
+        $monHoc->tenmon = $request->tenMon;
         $monHoc->save();
         return redirect()->route('monhoc.index');
     }

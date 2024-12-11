@@ -16,6 +16,16 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Tên Môn học
+                           {!!sortable('tenmon',$sort)!!}
+
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Ngày tạo
+                             {!!sortable('created_at',$sort) !!}
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Ngày cập nhật
+                            {!!sortable('updated_at',$sort) !!}
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Hành Động
@@ -27,10 +37,16 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $loop->iteration }}
+                                {{ $loop->iteration }} 
                             </th>
                             <td class="px-6 py-4">
                                 {{ $monHoc->tenmon }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $monHoc->created_at }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $monHoc->updated_at ?? "Chưa cập nhật"}}
                             </td>
                             <td class="px-6 py-4">
                                 <form class="inline" method="POST" action="{{ route('monhoc.destroy', ['monhoc' => $monHoc->id]) }}">
