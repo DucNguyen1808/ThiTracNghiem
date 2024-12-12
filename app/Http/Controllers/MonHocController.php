@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MonHoc;
+use Illuminate\Support\Facades\Auth;
 
 class MonHocController extends Controller
 {
@@ -12,17 +13,22 @@ class MonHocController extends Controller
      */
     public function index(Request $request)
     {
-        dd(gettype($request->all()));
+        $message=null;
         $dsMonHoc = MonHoc::get();
         if ($request->get('sort')['enabel']) {
             $column = $request->get('sort')['column'];
             $type = $request->get('sort')['type'];
             $dsMonHoc = MonHoc::orderBy($column, $type)->get();
         }
-        $sort = $request->get('sort');
-        return view('admin.monhoc.index', ['dsMonHoc' => $dsMonHoc, 'sort' => $sort]);
-    }
+        if($request->get('searchKey')) {
+            $searchKey = strtolower($request->get('searchKey'));
+            $dsMonHoc = MonHoc::whereRaw('LOWER(tenmon) LIKE ?', ['%' . $searchKey . '%'])->get();
+            $message = count($dsMonHoc) == 0 ? 'Không tìm thấy môn học' : null;
+        }
 
+        $sort = $request->get('sort');
+        return view('admin.monhoc.index', ['dsMonHoc' => $dsMonHoc, 'sort' => $sort,'message'=>$message]);
+    }
     /**
      * Show the form for creating a new resource.
      */

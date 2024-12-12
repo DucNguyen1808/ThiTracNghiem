@@ -2,7 +2,7 @@
 
 use Hamcrest\Text\SubstringMatcher;
 
-function sortable($field, $sort,$class="text-Minfo")
+function sortable($field, $sort)
 {
 
     $sortType = $field == $sort['column'] ? $sort['type'] : 'default';
@@ -19,8 +19,8 @@ function sortable($field, $sort,$class="text-Minfo")
     $icon = $icons[$sortType];
     $type = $types[$sortType];
     $url = e('href=?_sort=true&column=' . $field . '&type=' . $type . '');
-    $html = "<a $url>
-                <i class='$icon $class'></i>
+    $html = "<a $url class='text-Minfo'>
+                <i class='$icon'></i>
             </a>";
     return $html;
 }

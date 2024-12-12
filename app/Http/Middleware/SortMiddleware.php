@@ -20,13 +20,14 @@ class SortMiddleware
             'type' => 'default',
             'column' => ''
         ]]);
-        if ($request->query->get('_sort'))
+        if ($request->query->get('_sort')){
             $isValidtype = in_array($request->get('type'), ['asc', 'desc']);
-        $request->merge(['sort' => [
-            'enabel' => true,
-            'type' => $isValidtype ? $request->query->get('type') : 'desc',
-            'column' => $request->query->get('column')
-        ]]);
+            $request->merge(['sort' => [
+                'enabel' => true,
+                'type' => $isValidtype ? $request->query->get('type') : 'desc',
+                'column' => $request->query->get('column')
+            ]]);
+        }
 
         return $next($request);
     }
