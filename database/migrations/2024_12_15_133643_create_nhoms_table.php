@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monhoc', function (Blueprint $table) {
+        Schema::create('nhoms', function (Blueprint $table) {
             $table->id();
-            $table->string('tenmon');
             $table->timestamps();
-            $table->engine = 'InnoDB';
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monhoc');
+        Schema::dropIfExists('nhoms');
     }
 };

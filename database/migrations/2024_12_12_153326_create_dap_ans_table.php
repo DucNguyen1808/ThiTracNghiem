@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monhoc', function (Blueprint $table) {
+        Schema::create('dapan', function (Blueprint $table) {
             $table->id();
-            $table->string('tenmon');
+            $table->string('noidung');
+            $table->boolean('is_dapan');
+            $table->foreignId('id_cauhoi')->constrained('cauhoi')->onDelete('CASCADE');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monhoc');
+        Schema::dropIfExists('dap_ans');
     }
 };

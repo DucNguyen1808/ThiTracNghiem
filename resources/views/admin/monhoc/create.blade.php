@@ -15,7 +15,7 @@
                     <button class="ml-2 btn-success" type="submit">Lưu</button>
                 </div>
                 @error('tenMon')
-                    <p class="text-Merrors">Tên môn không được để trống</p>
+                    <p class="text-Merrors font-semibold">Tên môn không được để trống</p>
                 @enderror
             </form>
         </div>
