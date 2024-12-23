@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <div class="p-4">
+    <div class="p-4 h-full overflow-scroll">
         <h4 class="my-4 text-xl text-Mgray font-normal">Thêm câu hỏi</h4>
         <form action="{{ route('cauhoi.store') }}" method="POST" id="addForm">
             @csrf
@@ -15,7 +15,6 @@
                             <option value="{{ $monhoc->id }}">{{ $monhoc->tenmon }}</option>
                         @endforeach
                     </select>
-
                 </div>
                 <div class="mr-4">
                     <label for="countries" class="block mb-2 text-sm font-medium text-Mplanet dark:text-white">Độ

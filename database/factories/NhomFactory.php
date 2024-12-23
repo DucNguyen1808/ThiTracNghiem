@@ -1,24 +1,26 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\MonHoc;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MonHoc>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Nhom>
  */
-class MonHocFactory extends Factory
+class NhomFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    protected $model=MonHoc::class;
     public function definition(): array
     {
         return [
-            
+            'tennhom' => fake()->numberBetween(1, 100),
+            'sosi' => 50,
+            'hocky' => 'I',
+            'namhoc' => '2021-2022',
         ];
     }
 }

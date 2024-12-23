@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    function showLogin(){
+    function showLogin()
+    {
         return view('admin.login');
     }
     public function authenticate(Request $request): RedirectResponse
@@ -16,16 +17,24 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+
         ]);
- 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::attempt([...$credentials, 'quyen' => 1])) {
             $request->session()->regenerate();
- 
             return redirect()->route('monhoc.index');
         }
- 
+        if (Auth::attempt([...$credentials, 'quyen' => 2])) {
+            $request->session()->regenerate();
+            return redirect()->route('user.home');
+        }
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Sai thông tin đăng nhập',
         ])->onlyInput('email');
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

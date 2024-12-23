@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <div class="p-4">
+    <div class="p-4 h-full overflow-scroll">
         <h4 class="my-4 text-xl text-Mgray font-normal">Sửa môn học</h4>
         <div>
             <form method="POST" action="{{ route('monhoc.update',['monhoc'=>$monHoc->id]) }}">

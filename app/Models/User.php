@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -22,7 +24,18 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function isAdmin()
+    {
+        return $this->quyen == 1;
+    }
+    public function chiTietNhoms(): HasMany
+    {
+        return $this->HasMany(ChiTietNhom::class, 'id_user', 'id');
+    }
+    public function nhoms(): BelongsToMany
+    {
+        return $this->belongsToMany(Nhom::class, 'chitietnhom', 'id_user', 'id_nhom');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -902,13 +902,16 @@
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Thi trắc nghiệm</title>
 
 </head>
 
 <body class="">
-    <div class="grid grid-cols-12">
-        <div class="col-span-2 h-screen p-4">
+    <div class="grid grid-cols-12 h-screen">
+        <div class="xl:block hidden col-span-2 h-screen p-4">
             <div>
                 <i class="fa-solid fa-graduation-cap text-[32px] text-Mblue"></i>
                 <span class="font-semibold text-Mplanet">Exam</span>
@@ -916,31 +919,74 @@
             <div class="my-8 flex px-3 py-2 rounded-md bg-MgrayLighter items-center justify-between">
                 <div class="flex items-center">
                     <img class="mr-4 w-[30px] h-[30px] object-fill rounded-md "
-                        src="{{ asset('storage/images/avata1.jpg') }}" alt="Lỗi">
+                    @php
+                        if(Auth::user()->anhdaidien){
+                            asset('storage/images/'.Auth::user()->anhdaidien);
+                        }
+                    @endphp
+                        src="{{ Auth::user()->avatar != null ? asset('storage/images/'.Auth::user()->avatar) : asset('storage/images/default_avatar.png')  }}" alt="Lỗi">
                     <div>
-                        <p class="text-[12px] font-medium text-Mplanet">Phạm Đức Nguyên</p>
-                        <p class="text-[11px] font-medium text-Mgray">Sinh viên</p>
+                        <p class="text-[12px] font-medium text-Mplanet">{{ Auth::user()->name}}</p>
+                        <p class="text-[11px] font-medium text-Mgray">{{ Auth::user()->quyen == 1 ? 'Admin' : 'Sinh viên' }}</p>
                     </div>
                 </div>
                 <div>
                     <i class="fa-solid fa-ellipsis-vertical hover:cursor-pointer"></i>
                 </div>
             </div>
-            <a href="{{ route('monhoc.index') }}"
-                class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*monhoc*') ? 'text-Mblue' : 'text-Mgray' }}">
-                <i class="text-[20px]  mr-4 fa-solid fa-book"></i>
-                <p class="text-[14px] font-semibold {{ Request::is('*monhoc*') ? 'text-Mblue' : 'text-Mplanet' }}">Môn
-                    học</p>
-            </a>
-            <a href="{{ route('cauhoi.index') }}"
-                class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*cauhoi*') ? 'text-Mblue' : 'text-Mgray' }}">
-                <i class="text-[20px]  mr-4 fa-solid fa-circle-question"></i>
-                <p class="text-[14px] font-semibold {{ Request::is('*cauhoi*') ? 'text-Mblue' : 'text-Mplanet' }}">Câu
-                    hỏi</p>
-            </a>
+            <div class="{{ Auth::user()->quyen == 1 ? 'block' : 'hidden' }}">
+                <a href="{{ route('monhoc.index') }}"
+                    class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*monhoc*') ? 'text-Mblue' : 'text-Mgray' }}">
+                    <i class="text-[20px]  mr-4 fa-solid fa-book"></i>
+                    <p class="text-[14px] font-semibold {{ Request::is('*monhoc*') ? 'text-Mblue' : 'text-Mplanet' }}">
+                        Môn
+                        học</p>
+                </a>
+                <a href="{{ route('cauhoi.index') }}"
+                    class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*cauhoi*') ? 'text-Mblue' : 'text-Mgray' }}">
+                    <i class="text-[20px]  mr-4 fa-solid fa-circle-question"></i>
+                    <p class="text-[14px] font-semibold {{ Request::is('*cauhoi*') ? 'text-Mblue' : 'text-Mplanet' }}">
+                        Câu
+                        hỏi</p>
+                </a>
+                <a href="{{ route('nhom.index') }}"
+                    class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*nhom*') ? 'text-Mblue' : 'text-Mgray' }}">
+                    <i class="text-[20px]  mr-4 fa-solid fa-user-group"></i>
+                    <p class="text-[14px] font-semibold {{ Request::is('*nhom*') ? 'text-Mblue' : 'text-Mplanet' }}">
+                        Nhóm
+                    </p>
+                </a>
+                <a href="{{ route('user.index') }}"
+                    class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*user*') ? 'text-Mblue' : 'text-Mgray' }}">
+                    <i class="text-[20px]  mr-4 fa-solid fa-user"></i>
+                    <p class="text-[14px] font-semibold {{ Request::is('*user*') ? 'text-Mblue' : 'text-Mplanet' }}">
+                        Người
+                        dùng
+                    </p>
+                </a>
+                <a href="{{ route('dethi.index') }}"
+                    class=" mb-3 px-3 py-2 flex items-center {{ Request::is('*dethi*') ? 'text-Mblue' : 'text-Mgray' }}">
+                    <i class="text-[20px]  mr-4 fa-solid fa-newspaper"></i>
+                    <p class="text-[14px] font-semibold {{ Request::is('*dethi*') ? 'text-Mblue' : 'text-Mplanet' }}">
+                        Đề
+                        thi
+                    </p>
+                </a>
+                <a href="{{ route('logout') }}" class="mb-3 px-3 py-2 flex items-center">
+                    <i class="fa-solid text-[20px]  text-Mplanet mr-4 fa-arrow-right-from-bracket"></i>
+                    <p class="text-[14px] font-semibold text-Mplanet ">Đăng xuất</p>
+                </a>
+            </div>
+            <div class="{{ Auth::user()->quyen == 2 ? 'block' : 'hidden' }}">
+                <a href="{{ route('user.dekiemtra') }}" class="mb-3 px-3 py-2 flex items-center">
+                    <i class="fa-solid fa-file text-[20px]  text-Mplanet mr-4"></i>
+                    <p class="text-[14px] font-semibold text-Mplanet ">Đề kiểm tra</p>
+                </a>
+            </div>
         </div>
-        <div class="bg-Mlight col-span-10">
-            <div class="col-span-10">
+
+        <div class="bg-Mlight col-span-12 xl:col-span-10 overflow-hidden">
+            <div class="col-span-10 h-full">
                 @include('layout.header')
                 @yield('content')
             </div>

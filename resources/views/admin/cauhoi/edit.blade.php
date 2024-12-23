@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <div class="p-4">
+    <div class="p-4 h-full overflow-scroll">
         <h4 class="my-4 text-xl text-Mgray font-normal">Sửa câu hỏi</h4>
         <form action="{{ route('cauhoi.update',['cauhoi'=>$cauHoi->id]) }}" method="POST" id="addForm">
             @csrf

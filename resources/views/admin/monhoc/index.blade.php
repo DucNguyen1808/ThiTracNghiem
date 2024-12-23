@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div class="p-4">
+    <div class="p-4 h-full overflow-scroll">
         <h4 class="my-4 text-xl text-Mgray font-normal">Môn học</h4>
         <div class="flex justify-between items-center">
             <a href="{{ route('monhoc.create') }}" class="btn-primary">

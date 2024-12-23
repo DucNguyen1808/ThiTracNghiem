@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nhom', function (Blueprint $table) {
-            $table->id();
-            $table->string('tennhom');
-            $table->integer('siso');
-            $table->string('namhoc');
-            $table->string('hocky');
+        Schema::create('giaodethi', function (Blueprint $table) {
+            $table->foreignId('id_nhom')->constrained('nhom')->onDelete('CASCADE');
+            $table->foreignId('id_dethi')->constrained('dethi')->onDelete('CASCADE');
+            $table->primary(['id_dethi', 'id_nhom']);
             $table->timestamps();
             $table->engine = 'InnoDB';
-
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nhoms');
+        Schema::dropIfExists('giao_de_this');
     }
 };
