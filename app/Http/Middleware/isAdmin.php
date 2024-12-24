@@ -16,8 +16,8 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()->quyen == 1) {
-            return redirect()->back();
+        if (!$request->user() || $request->user()->quyen !== 1) {
+            return redirect()->route('user.home');
         }
         return $next($request);
     }

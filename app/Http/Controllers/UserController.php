@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -64,11 +67,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function show()
+    {
+        return view('account');
+    }
     public function edit(string $id)
     {
         $user = User::find($id);
@@ -96,12 +98,50 @@ class UserController extends Controller
         $user->update();
         return redirect()->route('user.index');
     }
+    public function capnhathoso(Request $request, string $id)
+    {
+        $validatedData =  $request->validate([
+            'ten' => 'required',
+            'email' => 'required',
+            'gioitinh' => 'required',
+            'ngaysinh' => 'required',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $user = User::find($id);
+        $user->name = $request->ten;
+        $user->email = $request->email;
+        $user->gioitinh = $request->gioitinh;
+        $user->ngaysinh = $request->ngaysinh;
+        if ($request->file('avatar') != null) {
+            $path = Storage::putFile('public/images', $request->file('avatar'));
+            $user->avatar = basename($path);
+        }
+        $user->update();
+        return redirect()->back();
+    }
+    public function doimatkhau(Request $request, string $id)
+    {
+        $validatedData =  $request->validate([
+            'matkhaucu' => 'required',
+            'matkhaumoi' => 'required',
+        ]);
+        $user = User::find($id);
 
+        if (Hash::check($request->matkhaucu, $user->password)) {
+            $user->password = $request->matkhaumoi;
+            $user->save();
+            return redirect()->back();
+        } else {
+            return redirect()->back()->withErrors(['matkhaucukhongdung' => 'Mật khẩu cũ không đúng']);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+        if ($id == 1)
+            return redirect()->route('user.index');
         $user = User::find($id);
         $user->delete();
         return redirect()->route('user.index');

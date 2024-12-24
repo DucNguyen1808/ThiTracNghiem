@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserDeKiemTraConTroller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user  = Auth::user();
-        $nhoms = $user->nhoms->all();
+        $nhoms = $user->nhoms;
         return view('user.dekiemtra', ['nhoms' => $nhoms]);
     }
     public function show(string $id)
@@ -33,9 +33,9 @@ class UserDeKiemTraConTroller extends Controller
     public function lamkiemtra(string $id)
     {
         $deThi = DeThi::find($id);
-        if(date('Y-m-d H:i:s') > $deThi->tgketthuc)
+        if (date('Y-m-d H:i:s') > $deThi->tgketthuc)
             return redirect()->back();
-        if(date('Y-m-d H:i:s') < $deThi->tgmode)
+        if (date('Y-m-d H:i:s') < $deThi->tgmode)
             return redirect()->back();
 
         $cauHois = $deThi->cauHois->all();

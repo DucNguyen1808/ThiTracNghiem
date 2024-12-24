@@ -44,6 +44,10 @@
                                 {!! sortable('ngaysinh', $sort) !!}
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Quyền
+                                {!! sortable('quyen', $sort) !!}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Ngày tạo
                                 {!! sortable('created_at', $sort) !!}
                             </th>
@@ -65,7 +69,7 @@
                                 </th>
                                 <td class="px-6 py-4">
                                     <div class="flex">
-                                        <img class="w-[40px] rounded-full" src="{{ asset('storage/images/default_avatar.png') }}" alt="">
+                                        <img class="w-[40px] rounded-full" src="{{$user->avatar != null ? asset('storage/images/'.$user->avatar) : asset('storage/images/default_avatar.png')  }}" alt="">
                                         <div class="ml-2">
                                             <p class="text-Minfo font-medium">{{ $user->name }}</p>
                                             <p class="text-Mplanet">{{ $user->email }}</p>
@@ -79,14 +83,23 @@
                                     {{ $user->ngaysinh }}
                                 </td>
                                 <td class="px-6 py-4">
+                                    {{ $user->quyen == 1 ? 'Admin' : 'Sinh Viên' }}
+                                </td>
+                                <td class="px-6 py-4">
                                     {{ $user->created_at }}
                                 </td>
+                                @if($user->id !=1)
                                 <td class="px-6 py-4">
                                     <button data-id="{{ $user->id }}" type="submit" class="btn-danger btn_delete"
                                         href=""><i class="fa-solid fa-trash-can"></i></button>
                                     <a class="btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i
                                             class="fa-regular fa-pen-to-square"></i></a>
                                 </td>
+                                @else
+                                <td class="px-6 py-4">
+
+                                </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

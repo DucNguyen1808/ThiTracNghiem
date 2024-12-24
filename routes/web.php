@@ -19,15 +19,15 @@ use App\Models\MonHoc;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/checkLogin', [LoginController::class, 'authenticate'])->name('checkLogin');
 
-//middleware('isAdmin')
-Route::prefix('admin')->middleware('auth')->group(function () {
+
+Route::prefix('admin')->middleware('auth')->middleware('isAdmin')->group(function () {
     Route::resource('/monhoc', MonHocController::class);
     Route::resource('/cauhoi', CauHoiController::class);
 
@@ -39,16 +39,20 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('/user', UserController::class);
     Route::resource('/dethi', DeThiController::class);
     Route::get('/dethi/{id}/addch', [ChiTietDeThiController::class, 'create'])->name('dethi.addcauhoi');
+    Route::get('/dethi/{id}/xemdiem', [DeThiController::class, 'xemdiem'])->name('dethi.xemdiem');
+
     Route::post('/chitietdethi/store', [ChiTietDeThiController::class, 'store'])->name('ChiTietDeThi.store');
     Route::delete('/chitietdethi/{id}', [ChiTietDeThiController::class, 'destroy'])->name('ChiTietDeThi.destroy');
+
     Route::post('/giaodethi/store', [GiaoDeThiController::class, 'store'])->name('giaodethi.store');
     Route::delete('/giaodethi/{id}', [GiaoDeThiController::class, 'destroy'])->name('giaodethi.destroy');
 });
-
+Route::prefix('account')->middleware('auth')->name('account.')->group(function () {
+    Route::get('/',[UserController::class, 'show'])->name('show');
+    Route::put('/{id}',[UserController::class, 'capnhathoso'])->name('capnhathoso');
+    Route::put('doimatkhau/{id}',[UserController::class, 'doimatkhau'])->name('doimatkhau');
+});
 Route::prefix('user')->middleware('auth')->name('user.')->group(function () {
-    Route::get('/home', function () {
-        return view('user.home');
-    })->name('home');
     Route::get('/dekiemtra',[UserDeKiemTraConTroller::class,'index'])->name('dekiemtra');
     Route::get('/dekiemtra/{id}',[UserDeKiemTraConTroller::class,'show'])->name('dekiemtra.show');
     Route::get('/dekiemtra/lamkiemtra/{id}',[UserDeKiemTraConTroller::class,'lamkiemtra'])->name('dekiemtra.lamkiemtra');
@@ -57,4 +61,3 @@ Route::prefix('user')->middleware('auth')->name('user.')->group(function () {
 
 });
 
-Route::get('/test',[test::class,'index']);

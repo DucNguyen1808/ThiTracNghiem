@@ -18,10 +18,17 @@ class DeThi extends Model
     {
         return $this->belongsTo(MonHoc::class, 'id_monhoc', 'id');
     }
-
+    public function ketQuas(): HasMany
+    {
+        return $this->hasMany(KetQua::class, 'id_dethi', 'id');
+    }
     public function cauHois(): BelongsToMany
     {
         return $this->belongsToMany(CauHoi::class, 'chitietdethi', 'id_de', 'id_cauhoi');
+    }
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'ketqua', 'id_dethi', 'id_user');
     }
     public function nhoms(): BelongsToMany
     {

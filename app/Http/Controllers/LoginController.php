@@ -10,6 +10,14 @@ class LoginController extends Controller
 {
     function showLogin()
     {
+        if (Auth::user()){
+            if(Auth::user()->quyen==1){
+                return redirect()->route('monhoc.index');
+            }
+            else{
+                return redirect()->route('user.dekiemtra');
+            }
+        }
         return view('admin.login');
     }
     public function authenticate(Request $request): RedirectResponse
@@ -26,7 +34,7 @@ class LoginController extends Controller
         }
         if (Auth::attempt([...$credentials, 'quyen' => 2])) {
             $request->session()->regenerate();
-            return redirect()->route('user.home');
+            return redirect()->route('user.dekiemtra');
         }
 
         return back()->withErrors([

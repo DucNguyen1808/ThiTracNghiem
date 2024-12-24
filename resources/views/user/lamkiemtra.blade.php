@@ -18,7 +18,7 @@
 
 <body class="bg-MgrayLighter overflow-hidden">
 
-    <form method="POST" id="exam-form" action="{{ route('user.dekiemtra.store') }}">
+    <form class="" method="POST" id="exam-form" action="{{ route('user.dekiemtra.store') }}">
         <input type="hidden" name="id_dethi" value="{{ $deThi->id }}">
         @csrf
         <div class="flex justify-end p-4 items-center bg-white shadow-sm fixed top-0 left-0 right-0">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="grid grid-cols-12 w-[1440px] mx-auto">
-            <div class="col-span-8 w-full sticky top-20 h-4/5 overflow-y-scroll">
+            <div class="col-span-8 w-full mt-[80px]  h-[750px] overflow-y-scroll">
                 @foreach ($cauHois as $cauHoi)
                     <div id='{{ $cauHoi->id }}' class="mb-4">
                         <div class="p-6 bg-white">
@@ -75,10 +75,10 @@
                 @endforeach
             </div>
             <div
-                class="flex h-[600px] items-start overflow-y-scroll flex-wrap col-span-4 bg-white mt-20 ml-4 text-center p-4 self-start sticky top-20">
+                class="flex  items-start flex-wrap  col-span-4 bg-white mt-20 ml-4 text-center p-4 self-start sticky top-20">
                 @foreach ($cauHois as $cauHoi)
                     <div onclick="scrollToQuestion('{{ $cauHoi->id }}')" id='{{ $cauHoi->id }}'
-                        class="btncauhoi btn-primary w-[40px] ml-1   bg-white text-Mplanet border-[1px] mb-2">
+                        class="btncauhoi btn-primary w-[50px] ml-1 bg-white text-Mplanet border-Mblue border-[1px] mb-2">
                         {{ $loop->iteration }}</div>
                 @endforeach
                 {{-- @for ($i = 0; $i < 100; $i++)
@@ -140,7 +140,8 @@
                         btncauhoi.forEach(btn => {
                             if (element.getAttribute('data-id') == btn.id) {
                                 btn.classList.remove('bg-white');
-                                btn.classList.add('bg-green-600');
+                                btn.classList.add('bg-Mblue');
+                                btn.classList.add('text-white');
                                 console.log(btn)
                             }
 
@@ -152,8 +153,13 @@
         btnNopBai.onclick = (e) => {
             e.preventDefault();
             window.removeEventListener('beforeunload', xulytruockhichuyentrang);
-            localStorage.clear();
-            examForm.submit();
+            const result = confirm("Bạn muốn nộp bài thi");
+            if (result) {
+                localStorage.clear();
+                examForm.submit();
+            } else {
+                return;
+            }
         }
         window.addEventListener('beforeunload', xulytruockhichuyentrang);
         document.addEventListener('DOMContentLoaded', loadAnswers);
@@ -172,10 +178,10 @@
                 btncauhoi.forEach(btn => {
                     if (element.target.getAttribute('data-id') == btn.id) {
                         btn.classList.remove('bg-white');
-                        btn.classList.add('bg-green-600');
+                        btn.classList.add('bg-Mblue');
+                        btn.classList.add('text-white');
                         console.log(btn)
                     }
-
                 })
             }
         })

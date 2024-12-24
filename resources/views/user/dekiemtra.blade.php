@@ -2,22 +2,6 @@
 
 @section('content')
     <div class="p-4 h-full overflow-scroll">
-        <div class="flex w-full items-center">
-            <div class="">
-                <select id="countries" name="idMonHoc"
-                    class="bg-gray-50 border border-gray-300 text-Mplanet text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="" selected>Tất cả</option>
-                </select>
-            </div>
-            <div class="flex ml-3 w-[500px] items-center">
-                <form class=" w-full px-2 py-1 bg-Mcontrol flex rounded-lg" action="" method="GET">
-                    <input name="searchKey" class="bg-Mcontrol flex-1 outline-none caret-Mplanet text-[12px]" type="text"
-                        placeholder="Tìm kiếm đề kiểm tra">
-                    <button type="submit" class="mr-2 text-Mgray cursor-pointer hover:text-Mplanet"><i
-                            class="fa-solid fa-magnifying-glass"></i></button>
-                </form>
-            </div>
-        </div>
         <div class="mt-6">
             @foreach ($nhoms as $nhom)
                 <ul>

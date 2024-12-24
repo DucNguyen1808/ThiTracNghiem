@@ -73,7 +73,7 @@ class CauHoiController extends Controller
                 $dapAn->is_dapan = true;
             $dapAn->save();
         }
-        return redirect()->route('cauhoi.index');
+        return redirect()->route('cauhoi.create');
     }
 
     /**

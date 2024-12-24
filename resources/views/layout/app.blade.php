@@ -919,11 +919,6 @@
             <div class="my-8 flex px-3 py-2 rounded-md bg-MgrayLighter items-center justify-between">
                 <div class="flex items-center">
                     <img class="mr-4 w-[30px] h-[30px] object-fill rounded-md "
-                    @php
-                        if(Auth::user()->anhdaidien){
-                            asset('storage/images/'.Auth::user()->anhdaidien);
-                        }
-                    @endphp
                         src="{{ Auth::user()->avatar != null ? asset('storage/images/'.Auth::user()->avatar) : asset('storage/images/default_avatar.png')  }}" alt="Lỗi">
                     <div>
                         <p class="text-[12px] font-medium text-Mplanet">{{ Auth::user()->name}}</p>
@@ -931,7 +926,7 @@
                     </div>
                 </div>
                 <div>
-                    <i class="fa-solid fa-ellipsis-vertical hover:cursor-pointer"></i>
+                   <a href="{{ route('account.show') }}"><i class="fa-solid fa-ellipsis-vertical hover:cursor-pointer"></i></a>
                 </div>
             </div>
             <div class="{{ Auth::user()->quyen == 1 ? 'block' : 'hidden' }}">
@@ -981,6 +976,10 @@
                 <a href="{{ route('user.dekiemtra') }}" class="mb-3 px-3 py-2 flex items-center">
                     <i class="fa-solid fa-file text-[20px]  text-Mplanet mr-4"></i>
                     <p class="text-[14px] font-semibold text-Mplanet ">Đề kiểm tra</p>
+                </a>
+                <a href="{{ route('logout') }}" class="mb-3 px-3 py-2 flex items-center">
+                    <i class="fa-solid text-[20px]  text-Mplanet mr-4 fa-arrow-right-from-bracket"></i>
+                    <p class="text-[14px] font-semibold text-Mplanet ">Đăng xuất</p>
                 </a>
             </div>
         </div>
